@@ -10,7 +10,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
 
-var light;  // A light shining from the direction of the camera; moves with the camera.
+var light;  // Światło padające z kierunku kamery; porusza się wraz z aparatem.
 light = new THREE.DirectionalLight();
 light.position.set(-10, -2, 1);
 camera.add(light);
@@ -18,52 +18,51 @@ scene.add(camera);
 
 const material = new THREE.MeshPhongMaterial(
     {
-        color: 0xFFFFFF, 
-        // wireframe: true
+        color: 0x000000, 
     });
 
-const baseGeometry = new THREE.CylinderGeometry(1, 1, 0.15, 100);
+const baseGeometry = new THREE.CylinderGeometry(1, 1, 0.2, 6);
 
 const base = new THREE.Mesh(baseGeometry, material);
 
-const upperBaseGeometry = new THREE.CylinderGeometry(0.9, 0.9, 0.25, 100);
-
-const upperBase = new THREE.Mesh(upperBaseGeometry, material);
-upperBase.position.y = 0.1;
-
 let group = new THREE.Group();
-group.add(base);
-group.add(upperBase);
-group.position.set(0, -3.8, 0);
-group.scale.set(3, 2.5, 1);
+const Lacznik = new THREE.CylinderGeometry(0.5, 0.5, 0.1, 100);
+const Lacznik_def = new THREE.Mesh(Lacznik, material);
+const czesc_1 = new THREE.CylinderGeometry(0.5, 0.8, 0.8, 100);
+const czesc1 = new THREE.Mesh(czesc_1, material);   
+const czesc_2 = new THREE.CylinderGeometry(0.5, 0.5, 0.3, 100);
+const czesc2 = new THREE.Mesh(czesc_2, material); 
+const czesc_3 = new THREE.CylinderGeometry(0.6, 0.5, 0.7, 100);
+const czesc3 = new THREE.Mesh(czesc_3, material); 
+const czesc_4 = new THREE.CylinderGeometry(0.65, 0.65, 0.1, 100);
+const czesc4 = new THREE.Mesh(czesc_4, material); 
+const czesc_5 = new THREE.CylinderGeometry(0.7, 0.7, 0.2, 100);
+const czesc5 = new THREE.Mesh(czesc_5, material); 
 
-let points = [];
-for (var i = 0; i < 7; i++) {
-    points.push(new THREE.Vector2(Math.tan(i * 0.1)*3+6 , (i - 5) * 4));
-}
-let size = 0.2;
-let geometry1 = new THREE.LatheGeometry(points);
-let lathe1 = new THREE.Mesh(geometry1, material);
-lathe1.position.set(0, -1.7, -0.3);
-lathe1.scale.set(size, -size, -size);
+    
+    base.position.y = 0.2;
+    Lacznik_def.position.y=0.3;
+    czesc1.position.y=0.75;
+    czesc2.position.y=1.29;
+    czesc3.position.y=1.79;
+    czesc4.position.y=2.1;
+    czesc5.position.y=2.25;
+   
 
-const ringGeometry = new THREE.CylinderGeometry(1.5, 1.5, 0.3, 100);
-const ring = new THREE.Mesh(ringGeometry, material);
-ring.position.set(0, 1.3, 0);
+    group.add(base);
+    group.add(Lacznik_def);
+    group.add(czesc1);
+    group.add(czesc2);
+    group.add(czesc3);
+    group.add(czesc4);
+    group.add(czesc5);
+  
 
-const ballGeometry = new THREE.SphereGeometry(Math.PI / 2, 100, 100, Math.PI,  2*Math.PI, 0, 0.5 * Math.PI);
-material.side = THREE.DoubleSide;
-const ball = new THREE.Mesh(ballGeometry, material);
-ball.position.set(0, 1.5, 0);
-ball.scale.set(1,-1,-1);
 
-let head = new THREE.Group();
-head.add( ball);
-head.position.set(0,1.2,0);
+    group.position.set(0, -3.8, 0);
+    //group.scale.set(3, 2.5, 1);
 
-let chessPawn = new THREE.Group();
-chessPawn.add(group, lathe1, head);
-scene.add(chessPawn);
+    scene.add(group);
 
 function animate() {
     requestAnimationFrame(animate);
